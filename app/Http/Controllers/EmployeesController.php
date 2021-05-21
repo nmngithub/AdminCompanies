@@ -48,7 +48,6 @@ class EmployeesController extends Controller
         $Employees->company_id = $req->companyId;
         $Employees->email = $req->email;
         $Employees->phone = $req->phone;
-        dd($Employees);
         $Employees->save();
 
         return redirect()->back()->with('notification','Sửa thành công!');

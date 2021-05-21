@@ -88,14 +88,17 @@ class CompaniesController extends Controller
 
     public function delete($id){
         $Companies = Companies::find($id);
+   
+        $Employees = $Companies->employees()->delete();
         
-        $employees = $Companies->employees()->delete();
-
-        $Companies->delete();
-        while(file_exists(storage_path('app/public/'.$Companies->logo))){
-            unlink(storage_path('app/public/'.$Companies->logo));
+        if(!empty($Companies->logo)){
+            while(file_exists(storage_path('app/public/'.$Companies->logo))){
+                unlink(storage_path('app/public/'.$Companies->logo));
+            }
         }
-
+       
+        $Companies->delete();
+        
         return redirect()->back()->with('notification','Xóa thành công!');
     }
 }
